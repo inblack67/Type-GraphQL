@@ -2,10 +2,10 @@ import { NEW_NOTI } from "../utils/triggers";
 import { Noti } from "../utils/types";
 import { PubSub, PubSubEngine, Query, Resolver, Root, Subscription } from "type-graphql";
 
-@Resolver()
+@Resolver( HelloResolver )
 export class HelloResolver
 {
-    @Query()
+    @Query( () => String )
     hello (): string
     {
         return 'worlds';
@@ -19,7 +19,8 @@ export class HelloResolver
         payload: Noti
     )
     {
-        return payload;
+        console.log( 'payload', payload );
+        return payload.sub;
     }
 
     @Query( () => String )
@@ -30,7 +31,7 @@ export class HelloResolver
     {
         setInterval( () =>
         {
-            pubsub.publish( NEW_NOTI, { message: 'ok' } );
+            pubsub.publish( NEW_NOTI, { sub: 'ok' } );
         }, 1000 );
         return 'published';
     }

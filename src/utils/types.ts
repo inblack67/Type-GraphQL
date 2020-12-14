@@ -1,3 +1,3 @@
 export type Noti = {
-    message: string;
+    sub: string;
 }
